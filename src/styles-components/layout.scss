@@ -1,3 +1,43 @@
-.content {
+@import '../variables';
 
+.container-fluid {
+  background-color: $primary-color;
+
+  .content {
+    box-shadow: -5px 0 20px -18px rgba(0, 0, 0, .6);
+    background-color: map-get($background-colors, primary);
+    border-radius: 50px;
+
+    h3 {
+      font-size: 3rem;
+    }
+
+    .sidenav-crud {
+      .mat-list {
+        height: calc(100vh - (2.5rem + 100px));
+        overflow-y: auto;
+
+        .mat-list-item {
+          padding-top: 6px;
+          padding-bottom: 6px;
+          padding-left: .5rem;
+
+          h6 {
+            font-size: .94rem;
+          }
+        }
+      }
+    }
+
+    .content-crud {
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 50px;
+      box-shadow: 0 3px 16px -8px rgb(0, 0, 0, .5);
+
+      .form-content {
+        height: calc(100vh - (2.5rem + 41px + 4rem + 48px + 70px));
+      }
+    }
+  }
 }

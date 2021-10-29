@@ -1,0 +1,34 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  <h1>{{entity?.position?.position ? 'Editar' : 'Guardar'}}</h1>
+  <div class="form-content">
+    <div class="row">
+      <mat-form-field class="col-8" appearance="outline">
+        <mat-label>Proveedor</mat-label>
+        <input matInput formControlName="provider" required maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field class="col-4" appearance="outline">
+        <mat-label>NIT</mat-label>
+        <input matInput formControlName="nit" required maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field class="col-8" appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="address" required maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field class="col-4" appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" pattern="\d*" maxlength="8" type="tel" required maxlength="8">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row position-relative">
+    <button mat-fab type="button" color="primary" class="btn-add" (click)="addItem()" matTooltip="Nuevo registro">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="col-12 text-end">
+      <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar</button>
+    </div>
+  </div>
+</form>

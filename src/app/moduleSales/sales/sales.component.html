@@ -1,0 +1,70 @@
+<form [formGroup]="form" class="sales-component">
+  <div class="row">
+    <h1 class="col-12">VENTAS</h1>
+    <h6>Agregue los datos de la factura.</h6>
+    <mat-form-field appearance="outline" class="col-3">
+      <input placeholder="NIT" type="text" matInput formControlName="nit"
+             [matAutocomplete]="auto" (change)="validateValueNit()">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nit">
+          {{option.nit}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-7">
+      <input placeholder="Nombre" matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-2">
+      <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Fecha">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-12">
+      <input placeholder="Dirección" matInput formControlName="address">
+    </mat-form-field>
+
+  </div>
+
+  <div class="row mt-2">
+    <div>
+      <button type="button" mat-flat-button color="primary" (click)="openAdd()">Agregar detalle</button>
+      <button type="button" mat-flat-button color="primary" class="ms-3 state success-bg">
+        Finalizar factura <mat-icon>arrow_forward</mat-icon>
+      </button>
+
+      <div class="mat-elevation-z1 table-content mt-3">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef> Valor </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </div>
+    </div>
+
+
+  </div>
+</form>

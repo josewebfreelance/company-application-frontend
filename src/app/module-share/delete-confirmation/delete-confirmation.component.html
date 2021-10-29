@@ -1,0 +1,43 @@
+<div class="delete-confirmation">
+    <h1 mat-dialog-title class="d-flex align-items-center">
+        <mat-icon class="delete-button">
+            {{data?.icon ? data?.icon : 'delete'}}
+        </mat-icon>
+        Eliminar
+    </h1>
+
+    <div mat-dialog-content class="mb-3">
+        <mat-card-content data-simplebar="" *ngIf="data?.code">
+            <mat-form-field class="col-12">
+                <input matInput placeholder="{{data?.labelCode}}" value="{{data?.code}}" disabled>
+            </mat-form-field>
+          <mat-form-field class="col-12" *ngIf="data?.description">
+            <input matInput placeholder="{{data.labelDescription}}" value="{{data.description}}" disabled>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-label>{{data?.msg ? data?.msg : 'Confirmar'}}</mat-label>
+
+        <div class="row mx-0 mt-3 pl-2" *ngIf='title && title !== "SERIE" ' style="font-weight: bold;">  {{ 'Eliminación de ' + title  + ' - ' + registro }}  </div>
+
+        <div class="row mx-0 mt-3 pl-2" *ngIf='title && title === "SERIE" ' style="font-weight: bold;">
+            <mat-form-field class="col-12">
+                <input matInput placeholder="Serie" [value]='registro.serie' disabled>
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+                <input matInput placeholder="Clasificación" [value]='registro.usageType' disabled>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions class="d-flex justify-content-end">
+        <button mat-flat-button (click)="onNoClick()">Cancelar</button>
+        <button mat-flat-button
+                color="primary"
+                [mat-dialog-close]="true"
+                cdkFocusInitial>
+            Eliminar
+        </button>
+    </div>
+</div>

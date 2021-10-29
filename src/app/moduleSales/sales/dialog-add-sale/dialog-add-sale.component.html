@@ -1,0 +1,52 @@
+<div class="dialog-massive-control-process-component">
+  <h3 mat-dialog-title>
+    <mat-icon>add</mat-icon>
+    Nuevo detalle
+  </h3>
+
+  <div mat-dialog-content>
+
+    <form [formGroup]="form">
+
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>Producto</mat-label>
+          <input type="text" matInput formControlName="product" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="validateOnChange()">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option.product}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-4">
+          <mat-label>Cantidad</mat-label>
+          <input matInput formControlName="quantity" (change)="validateOnChange()">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-4">
+          <mat-label>P. unitario</mat-label>
+          <input matInput formControlName="price" (change)="validateOnChange()">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-4">
+          <mat-label>Total</mat-label>
+          <input matInput formControlName="total">
+        </mat-form-field>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button type="button" (click)="onCancel()">
+      Cancelar
+    </button>
+
+    <button mat-flat-button type="button" color="primary" (click)="onSave()">
+      Guardar
+    </button>
+  </div>
+</div>

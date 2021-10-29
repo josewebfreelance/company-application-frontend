@@ -1,0 +1,20 @@
+@import '~src/variables';
+
+.delete-confirmation {
+
+    .mat-dialog-content {
+        overflow: hidden;
+    }
+    width: 415px !important;
+
+    .delete-button {
+        margin-right: 0.5rem !important;
+        left: - 20px;
+    }
+
+    .set-bold {
+        font-weight: bold;
+    }
+
+}
+

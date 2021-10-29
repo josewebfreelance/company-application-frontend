@@ -1,0 +1,57 @@
+@import '../../../variables';
+
+.positions-component {
+
+  .mat-list-item {
+    border-bottom: 1px solid rgba(69, 90, 100, .1);
+    padding-bottom: 8px;
+    padding-top: 8px;
+    height: auto;
+
+    .mat-list-item-content {
+      padding: 0 8px;
+
+      .btn-list-delete {
+        opacity: 0;
+      }
+
+      h6 {
+        margin: 0 !important;
+      }
+    }
+
+    &:hover {
+      .btn-list-delete {
+        opacity: .9;
+      }
+    }
+
+    .identify {
+      background-color: $primary-color;
+      width: 30px;
+      display: inline-flex;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      color: #fff;
+      font-size: .8rem;
+    }
+
+    &:hover {
+      background-color: rgba(69, 90, 100, .1);
+      border-radius: 100px;
+      cursor: pointer;
+
+      .mat-list-item-content {
+        h6 {
+          font-weight: bold;
+
+          .identify {
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+}

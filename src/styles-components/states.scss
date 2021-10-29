@@ -1,0 +1,175 @@
+@import '../variables';
+
+/*
+input {
+  &.ng-invalid {
+    &.ng-touched {
+      border-color: $error-color;
+    }
+  }
+}
+*/
+
+.state {
+  &.system {
+    &-color {
+      color: map_get($font-colors, title) !important;
+    }
+
+    &-bg {
+      &:not([disabled]) {
+        background-color: map_get($font-colors, title) !important;
+      }
+    }
+  }
+
+  &.secondary {
+    &-color {
+      color: $secondary-color-sec !important;
+    }
+
+    &-bg {
+      &:not([disabled]) {
+        background-color: $secondary-color-sec;
+      }
+    }
+  }
+
+
+  &.primary {
+    &-color {
+      color: $primary-color-sec !important;
+    }
+
+    &-bg {
+      &:not([disabled]) {
+        background-color: $primary-color-sec !important;
+      }
+    }
+  }
+
+  &.disabled {
+    &-color {
+      color: map_get($background-colors, secondary) !important;
+    }
+
+    &-bg {
+      background-color: map_get($background-colors, secondary) !important;
+
+      &.mat-flat-button {
+        box-shadow: 0 4px 16px -5px map_get($background-colors, secondary);
+      }
+    }
+  }
+
+  &.success {
+    &-color {
+      color: map_get($action-colors, success) !important;
+    }
+
+    &-bg {
+      &:not([disabled]) {
+        background-color: map_get($action-colors, success) !important;
+
+        &.mat-flat-button {
+          box-shadow: 0 4px 16px -5px map_get($action-colors, success);
+        }
+      }
+    }
+  }
+
+  &.danger {
+    &-color {
+      color: map_get($action-colors, error) !important;
+    }
+
+    &-bg {
+      &-50 {
+        &:not([disabled]) {
+          background-color: map_get($action-colors-50, error) !important;
+
+          &.mat-flat-button {
+            box-shadow: none;
+          }
+        }
+      }
+
+      &:not([disabled]) {
+        background-color: map_get($action-colors, error) !important;
+
+        &.mat-flat-button {
+          box-shadow: 0 4px 16px -5px map_get($action-colors, error);
+        }
+      }
+    }
+  }
+
+
+  &.warning {
+    &-color {
+      color: map_get($alternative-action-colors, warning) !important;
+    }
+
+    &-bg {
+      &:not([disabled]) {
+        background-color: map_get($alternative-action-colors, warning) !important;
+
+        &.mat-flat-button {
+          box-shadow: 0 4px 16px -5px map_get($alternative-action-colors, warning);
+        }
+      }
+    }
+  }
+
+  &.info {
+    &-color {
+      color: map_get($action-colors, info) !important;
+    }
+
+    &-bg {
+      &:not([disabled]) {
+        background-color: map_get($action-colors, info) !important;
+
+        &.mat-flat-button {
+          box-shadow: 0 4px 16px -5px map_get($action-colors, info);
+        }
+      }
+    }
+  }
+}
+
+.process-status-generic {
+  margin-left: 1rem;
+  border-radius: 100px;
+  padding: .4rem 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem !important;
+}
+
+.properties-style {
+  justify-content: center;
+  max-width: 180px;
+}
+
+.process-status {
+  &-danger {
+    background-color: #{map_get($action-colors, error)}26;
+    @extend .process-status-generic, .properties-style;
+  }
+
+  &-success {
+    background-color: #{map_get($action-colors, success)}26;
+    @extend .process-status-generic, .properties-style;
+  }
+
+  &-warning {
+    background-color: #{map_get($alternative-action-colors, warning)}26;
+    @extend .process-status-generic, .properties-style;
+  }
+
+  &-warning-color {
+    color: #8c8336 !important;
+    @extend .properties-style;
+  }
+}

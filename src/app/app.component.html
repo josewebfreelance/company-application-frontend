@@ -1,22 +1,29 @@
-<div class="container-fluid d-flex p-0">
+<div class="container-fluid d-flex pe-0">
   <div class="col-2 navigation">
-    <h6>MENU</h6>
-    <mat-list>
-      <mat-list-item> Puestos </mat-list-item>
-      <mat-list-item> Empleados </mat-list-item>
-      <mat-list-item> Clientes </mat-list-item>
-      <mat-list-item> Proveedores </mat-list-item>
-      <mat-list-item> Marcas </mat-list-item>
-      <mat-list-item> Productos </mat-list-item>
-    </mat-list>
+    <div class="header-menu">
+      <div class="initials">
+        JL
+      </div>
+      <p class="user">Jose Lemus</p>
+      <p class="rol">Administrador</p>
+    </div>
 
-    <H6 class="mt-5">ACCIONES</H6>
-    <mat-list>
-      <mat-list-item> Compras </mat-list-item>
-      <mat-list-item> Ventas </mat-list-item>
-    </mat-list>
+    <div class="menu-list" data-simplebar="">
+      <div *ngFor="let item of menu">
+        <h6 class="mt-4" *ngIf="item.child.length > 0">{{item.title}}</h6>
+        <mat-list *ngIf="item.child.length > 0">
+          <mat-list-item *ngFor="let subItem of item.child"
+                         [routerLink]="subItem.route ? subItem.route : null">
+            {{subItem.title}}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+
   </div>
-  <div class="col-10 content pt-3 pb-3 ps-4 pe-4">
+  <div class="col-10 content pt-4 pb-3 ps-3 pe-4">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<simple-notifications [options]="notificationOptions"></simple-notifications>

@@ -1,0 +1,19 @@
+.sales-component {
+  .table-content {
+    height: 50vh;
+
+    table {
+      width: 100%;
+    }
+
+    .mat-column {
+      &-no {
+        width: 100px;
+      }
+
+      &-value {
+        width: 200px;
+      }
+    }
+  }
+}

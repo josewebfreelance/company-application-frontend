@@ -1,0 +1,55 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  <h1>{{entity?.position?.position ? 'Editar' : 'Guardar'}}</h1>
+  <div class="form-content">
+    <div class="row">
+      <mat-form-field class="col-6" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" required maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field class="col-6" appearance="outline">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="lastName" required maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field class="col-4" appearance="outline">
+        <mat-label>NIT</mat-label>
+        <input matInput formControlName="nit" required maxlength="50">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-4">
+        <mat-label>Género</mat-label>
+        <mat-select required formControlName="gender">
+          <mat-option *ngFor="let item of constants.GENDER_LIST" value="{{item?.code}}">
+            {{item?.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="col-4" appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" pattern="\d*" maxlength="8" type="tel" required maxlength="8">
+      </mat-form-field>
+
+      <mat-form-field class="col-4" appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput formControlName="email" type="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-4">
+        <mat-label>Fecha ingreso</mat-label>
+        <input matInput [matDatepicker]="pickerAdmission" readonly formControlName="admissionDate" required>
+        <mat-datepicker-toggle matSuffix [for]="pickerAdmission"></mat-datepicker-toggle>
+        <mat-datepicker #pickerAdmission></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row position-relative">
+    <button mat-fab type="button" color="primary" class="btn-add" (click)="addItem()" matTooltip="Nuevo registro">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="col-12 text-end">
+      <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar</button>
+    </div>
+  </div>
+</form>

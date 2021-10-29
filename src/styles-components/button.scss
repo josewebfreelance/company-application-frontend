@@ -1,0 +1,80 @@
+@import '../variables';
+
+button {
+  &:focus {
+    outline: 0 !important;
+  }
+
+  &.mat-fab {
+    &.mat-primary {
+      color: #ffffff;
+      box-shadow: 0 4px 16px -5px #00569e;
+      background-color: $primary-color;
+    }
+    &:disabled {
+      color: #7a7676;
+      background-color: #EDEDED;
+      box-shadow: none !important;
+    }
+  }
+
+  &.mat-flat-button {
+    &.mat-primary {
+      border-radius: 100px;
+      box-shadow: 0 4px 16px -5px #00569e;
+      background-color: $primary-color;
+    }
+  }
+  &:disabled {
+    box-shadow: none !important;
+  }
+
+  &.mat-mini-fab {
+    &.mat-primary {
+      background-color: $primary-color;
+    }
+  }
+
+  &.mat-icon-button {
+
+    &.btn-delete {
+      cursor: pointer;
+      color: map-get($background-colors, secondary);
+
+      &:hover {
+        color: map-get(  $action-colors, error);
+      }
+    }
+  }
+
+  &.btn-close {
+    font-weight: bold;
+  }
+
+  &.btn-download {
+    position: absolute;
+    top: 35px;
+    background-color: map-get($alternative-action-colors, success) !important;
+  }
+}
+
+.buttons-action {
+  button {
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !important;
+  }
+}
+
+.buttons-content {
+  text-align: right;
+
+  button {
+    margin-left: 1rem;
+  }
+}
+
+.btn-add {
+  position: absolute !important;
+  bottom: 16px;
+  left: -48px;
+  z-index: 1;
+}

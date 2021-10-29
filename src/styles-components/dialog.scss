@@ -1,0 +1,58 @@
+@import '../variables';
+
+mat-dialog-container {
+  overflow: initial !important;
+  position: relative;
+
+  .mat-dialog-title {
+    display: flex;
+
+    h1 {
+      color: map-get($font-colors, title);
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    > mat-icon {
+      border-radius: 100px;
+      width: 40px;
+      height: auto;
+      padding: 8px;
+      background-color: $primary-color;
+      color: #fff;
+      position: absolute;
+      left: -20px;
+      top: 18px;
+
+      & ~ h1 {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .mat-dialog-actions {
+    margin-top: .5rem;
+    justify-content: flex-end;
+
+    button {
+      &:first-child {
+        &.mat-flat-button {
+          color: map-get($action-colors, error);
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .btn-add-item {
+    position: absolute;
+    right: -20px;
+    top: 15vh;
+    background-color: map-get($action-colors, success) !important;
+  }
+
+  border-radius: 20px !important;
+}
+
+.custom-dialog-authorization {
+  max-width: 90vw !important;
+}

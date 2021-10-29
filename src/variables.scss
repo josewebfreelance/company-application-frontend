@@ -1,0 +1,58 @@
+$layout-properties: (
+  p-sidenav: calc(1rem * 2),
+  h-logo: calc(50px + 0.5rem),
+  h-crud-title: 48px,
+  h-crud-search: 52px,
+  h-user-menu: 66px
+);
+
+$sidenav-properties: (
+  w-sidenav: 65px
+);
+
+// FUENTES
+$font-light: Lato-light;
+$font-regular: Lato-regular;
+$font-size: 1rem;
+$font-icon: Material-icons;
+
+// Tema TIGO
+$primary-color: #4DB6AC;
+$primary-color-sec: #001b40;
+$secondary-color: #45B04A;
+$secondary-color-sec: #57C8C4;
+$error-color: #FF5722;
+$primary-text-color: #757575;
+
+$font-colors: (
+  title: #666666,
+  title-chart: #455A64,
+  primary: #536a74,
+  secondary: #a2a2a2,
+);
+
+$background-colors: (
+  primary: #ECEFF1,
+  secondary: #CFD8DC,
+);
+
+$action-colors: (
+  info: #4FC3F7,
+  success: #6bb16e,
+  error: #E57373,
+  warning: #FFF176
+);
+
+$alternative-action-colors: (
+  info: #48c7f4,
+  success: #85bb4c,
+  error: #ec5968,
+  warning: #ffc10e
+);
+
+$action-colors-50: (
+  info: #e3f2fd,
+  success: #e8f5e9,
+  error: #ffebee,
+  warning: #fff8e1
+);

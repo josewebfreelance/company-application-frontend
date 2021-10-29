@@ -1,0 +1,19 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  <h1>{{entity?.position?.position ? 'Editar' : 'Guardar'}}</h1>
+  <div class="form-content">
+    <div class="row">
+      <mat-form-field class="col-6" appearance="outline">
+        <mat-label>Marca</mat-label>
+        <input matInput formControlName="brand" required maxlength="50">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row position-relative">
+    <button mat-fab type="button" color="primary" class="btn-add" (click)="addItem()" matTooltip="Nuevo registro">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="col-12 text-end">
+      <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,22 @@
+<div class="row clients-component">
+  <div class="col-12">
+    <h3 class="ps-3">Marcas</h3>
+  </div>
+  <div class="col-3 sidenav-crud ps-2">
+    <mat-list data-simplebar="">
+      <mat-list-item *ngFor="let item of list" (click)="loadForm(item)">
+        <h6 class="col-10">{{item?.marca}}</h6>
+        <div class="col-2 text-end">
+          <button type="button" mat-icon-button class="btn-list-delete state danger-color" (click)="onDelete(item)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="col-9 content-crud">
+
+    <app-brands-form (onSuccessSubmit)="successSubmit($event)" #formComponent></app-brands-form>
+
+  </div>
+</div>
