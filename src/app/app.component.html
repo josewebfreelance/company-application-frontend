@@ -1,4 +1,9 @@
-<div class="container-fluid d-flex pe-0">
+<block-ui></block-ui>
+<div *ngIf="!isAuthenticate">
+  <router-outlet></router-outlet>
+
+</div>
+<div class="container-fluid d-flex pe-0" *ngIf="isAuthenticate">
   <div class="col-2 navigation">
     <div class="header-menu">
       <div class="initials">

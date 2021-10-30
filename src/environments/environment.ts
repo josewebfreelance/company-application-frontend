@@ -5,6 +5,15 @@
 export const environment = {
   production: false,
   apiUrl: 'https://sales-system-ej.azurewebsites.net/api/',
+  firebaseConfig: {
+    apiKey: 'AIzaSyDdCZ60u4xCJPlAAqTwvt85Cf-ytswQq2M',
+    authDomain: 'sales-system-48885.firebaseapp.com',
+    projectId: 'sales-system-48885',
+    storageBucket: 'sales-system-48885.appspot.com',
+    messagingSenderId: '31179055840',
+    appId: '1:31179055840:web:685826a03a1af1e4a2a685',
+    measurementId: 'G-QSF65Z4Q0P'
+  }
 };
 
 /*

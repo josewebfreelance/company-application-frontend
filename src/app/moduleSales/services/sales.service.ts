@@ -4,9 +4,10 @@ import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../../shared/constants';
 
 @Injectable()
-export class BinnacleService {
+export class SalesService {
 
-  url = API_URL;
+  url = `${API_URL}ventas`;
+  urlDetail = `${API_URL}VentasDetalle`;
 
   constructor(
     private http: HttpClient
@@ -14,7 +15,34 @@ export class BinnacleService {
   }
 
   query(req?: any): Observable<any> {
-    return this.http.get(`${this.url}/api/audit`);
+    return this.http.get(`${this.url}`);
   }
 
+  find(id?: any): Observable<any> {
+    return this.http.get(`${this.url}/${id}`);
+  }
+
+  create(entity: any): Observable<any> {
+    return this.http.post(`${this.url}`, entity);
+  }
+
+  update(entity: any): Observable<any> {
+    return this.http.post(`${this.url}`, entity);
+  }
+
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`, {});
+  }
+
+  createDetail(entity: any): Observable<any> {
+    return this.http.post(`${this.urlDetail}`, entity);
+  }
+
+  findDetail(id?: any): Observable<any> {
+    return this.http.get(`${this.urlDetail}/${id}`);
+  }
+
+  queryDetailSale(id?: any): Observable<any> {
+    return this.http.get(`${this.urlDetail}/Getall/${id}`);
+  }
 }

@@ -8,6 +8,7 @@ export const SALES_ROUTES: Routes = [
     canActivate: [],
     children: [
       {path: 'sale', component: SalesComponent},
+      {path: 'sale/:sale', component: SalesComponent},
       {path: 'log-sale', component: LogSalesComponent},
     ]
   }

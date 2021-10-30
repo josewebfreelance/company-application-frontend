@@ -10,6 +10,7 @@ import {EmployeesComponent} from './employees/employees.component';
 import {EmployeesFormComponent} from './employees/employees-form/employees-form.component';
 import {EmployeesService} from './services/employees.service';
 
+
 @NgModule({
   declarations: [
     PositionsComponent,
@@ -23,6 +24,8 @@ import {EmployeesService} from './services/employees.service';
   ],
   entryComponents: [
     DeleteConfirmationComponent
+  ],
+  exports: [
   ],
   providers: [
     PositionsService,

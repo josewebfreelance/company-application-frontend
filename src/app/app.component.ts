@@ -8,6 +8,7 @@ import {Options} from 'angular2-notifications';
 })
 export class AppComponent {
   title = 'company-frontend';
+  isAuthenticate = true;
 
   notificationOptions: Options = {
     timeOut: 6000

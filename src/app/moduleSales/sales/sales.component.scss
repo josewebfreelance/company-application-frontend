@@ -1,9 +1,13 @@
 .sales-component {
   .table-content {
-    height: 50vh;
+    height: calc(100vh - (261px + 4rem + 36px + 1rem + 40px));
 
     table {
       width: 100%;
+
+      .mat-column-actions {
+        width: 100px;
+      }
     }
 
     .mat-column {

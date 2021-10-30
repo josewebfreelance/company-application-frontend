@@ -1,9 +1,32 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import './styles-components/style-components';
 @import "~simplebar/dist/simplebar.css";
+@import url('./vivify.min.css');
 
 body {
   label, h1, h2, h3, h4, h5, h6, p, .mat-list-item-content {
     color: #455A64;
+  }
+}
+
+.custom-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  background-color: rgba(0,0,0,.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: white !important;
   }
 }
