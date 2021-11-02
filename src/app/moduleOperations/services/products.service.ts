@@ -17,6 +17,10 @@ export class ProductsService {
     return this.http.get(`${this.url}`);
   }
 
+  find(id?: any): Observable<any> {
+    return this.http.get(`${this.url}/${id}`);
+  }
+
   create(entity: any): Observable<any> {
     return this.http.post(`${this.url}`, entity);
   }

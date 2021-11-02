@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {SecurityService} from '../services/security.service';
+import {Router} from '@angular/router';
+import {ValidateSessionService} from '../services/validate-session.service';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +13,13 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
+  validateResponse = true;
 
   constructor(
-    private authenticate: AngularFireAuth
+    private securityService: SecurityService,
+    private router: Router,
+    private validateSession: ValidateSessionService,
+    private notifications: NotificationsService
   ) {
   }
 
@@ -22,31 +28,42 @@ export class LoginComponent implements OnInit {
       user: new FormControl(''),
       pass: new FormControl('')
     });
+
+    this.validateSession.status.subscribe(response => {
+      console.log(response);
+    });
+/*    if (this.securityService.validateSession()) {
+      this.router.navigate([`sales/sale`]).then();
+    }*/
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.validateResponse = false;
 
-  loginWithGoogle(): void {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // ...
-      }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
-    // this.authenticate.auth.signInWithPopup(new auth.GoogleAuthProvider);
+    const entity = {
+      usuario: this.form.get('user').value,
+      contraseña: this.form.get('pass').value
+    };
+    if (this.form.valid) {
+      this.securityService.signIn(entity).subscribe(response => {
+        if (response) {
+          this.validateResponse = true;
+
+          if (response.idUsuario) {
+            response.isLogin = true;
+            this.securityService.saveToken(response);
+            this.validateSession.statusSubscribe.next(this.securityService.validateSession());
+            // this.securityService.validateRedirection();
+          } else {
+            this.validateResponse = false;
+            response.isLogin = false;
+            this.notifications.error('Error', 'Credenciales invalidas, intente de nuevo.');
+          }
+        }
+      }, error => {
+        this.validateResponse = true;
+        this.notifications.error('Error', error.error);
+      });
+    }
   }
 }

@@ -14,12 +14,15 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {LoginComponent} from './securityModule/login/login.component';
 import {BlockUIModule} from 'ng-block-ui';
 import {CommonModule} from '@angular/common';
+import {SecurityService} from './securityModule/services/security.service';
+import {ValidateSessionService} from './securityModule/services/validate-session.service';
+import {ProvidersService} from './moduleOperations/services/providers.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BlockUIModule.forRoot({
@@ -37,7 +40,11 @@ import {CommonModule} from '@angular/common';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [
+    ProvidersService,
+    SecurityService,
+    ValidateSessionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

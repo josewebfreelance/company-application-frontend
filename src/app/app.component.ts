@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Options} from 'angular2-notifications';
+import {SecurityService} from './securityModule/services/security.service';
+import {ValidateSessionService} from './securityModule/services/validate-session.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'company-frontend';
-  isAuthenticate = true;
+  isLogin = false;
 
   notificationOptions: Options = {
     timeOut: 6000
@@ -25,8 +27,8 @@ export class AppComponent {
     {
       id: 10, title: 'COMPRAS', icon: '',
       child: [
-        {id: 11, title: 'Nueva', icon: '', route: '', child: []},
-        {id: 12, title: 'Consulta', icon: '', child: []},
+        {id: 11, title: 'Nueva', icon: '', route: 'sales/shopping', child: []},
+        {id: 12, title: 'Consulta', icon: '', route: 'sales/log-shopping', child: []},
       ]
     },
     {
@@ -41,4 +43,19 @@ export class AppComponent {
       ]
     }
   ];
+
+  constructor(
+    private securityService: SecurityService,
+    private validateSession: ValidateSessionService
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.validateSession.statusSubscribe.next(this.securityService.validateSession());
+
+    this.validateSession.status.subscribe(response => {
+      this.isLogin = response;
+      this.securityService.validateRedirection();
+    });
+  }
 }

@@ -1,25 +1,26 @@
-<div class="custom-loader vivify fadeIn" *ngIf="listClients.length === 0 || productsList.length === 0">
+<!--<div class="custom-loader vivify fadeIn" *ngIf="listProvidersComplete.length === 0 || productsList.length === 0">
   <mat-spinner></mat-spinner>
-</div>
+</div>-->
 
-<form [formGroup]="form" class="sales-component">
+<form [formGroup]="form" class="shopping-component">
   <div class="row">
-    <h1 class="col-6">VENTAS</h1>
+    <h1 class="col-6">Compras</h1>
     <div class="col-6 d-flex align-items-center justify-content-end pe-5">
       <mat-chip-list aria-label="Fish selection">
-        <mat-chip color="primary" class="state" *ngIf="entitySale.estadoVenta"
-                  [ngClass]="{'info-bg': entitySale.estadoVenta === 1, 'success-bg': entitySale.estadoVenta === 2, 'danger-bg': entitySale.estadoVenta === 3}" selected>
-          {{entitySale.estadoVenta === 1 ? 'En proceso' : entitySale.estadoVenta === 2 ? 'Finalizada' : entitySale.estadoVenta === 3 ? 'Anulada' : ''}}
+        <mat-chip color="primary" class="state" *ngIf="entityShopping.estadoVenta"
+                  [ngClass]="{'info-bg': entityShopping.estadoVenta === 1, 'success-bg': entityShopping.estadoVenta === 2, 'danger-bg': entityShopping.estadoVenta === 3}" selected>
+          {{entityShopping.estadoVenta === 1 ? 'En proceso' : entityShopping.estadoVenta === 2 ? 'Finalizada' : entityShopping.estadoVenta === 3 ? 'Anulada' : ''}}
         </mat-chip>
       </mat-chip-list>
     </div>
     <h6>Agregue los datos de la factura.</h6>
+
     <mat-form-field appearance="outline" class="col-3">
-      <input placeholder="NIT" type="text" matInput formControlName="nit"
-             [matAutocomplete]="auto" (change)="validateValueNit()">
+      <input placeholder="Proveedores" type="text" matInput formControlName="provider"
+             [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nit">
-          {{option.nit}}
+          {{option.nit}} - {{option.proveedor}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -34,20 +35,22 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
+<!--
     <mat-form-field appearance="outline" class="col-12">
       <input placeholder="Dirección" matInput formControlName="address">
     </mat-form-field>
+-->
 
   </div>
 
   <div class="row mt-2">
     <div>
       <button type="button" mat-flat-button color="primary" (click)="openAdd()"
-              [disabled]="form.invalid || entitySale.estadoVenta === 2 || entitySale.estadoVenta === 3">
+              [disabled]="form.invalid || entityShopping.estadoVenta === 2 || entityShopping.estadoVenta === 3">
         Agregar detalle
       </button>
       <button type="button" mat-flat-button color="primary" class="ms-3 state success-bg"
-              [disabled]="entitySale.estadoVenta === 2 || entitySale.estadoVenta === 3"
+              [disabled]="entityShopping.estadoVenta === 2 || entityShopping.estadoVenta === 3"
               (click)="endSale()">
         Finalizar factura <mat-icon>arrow_forward</mat-icon>
       </button>

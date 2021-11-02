@@ -1,20 +1,20 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {User} from '../sales.component';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {ProductsService} from '../../../moduleOperations/services/products.service';
 import {SalesService} from '../../services/sales.service';
 import {NotificationsService} from 'angular2-notifications';
+import {ShoppingService} from '../../services/shopping.service';
 
 @Component({
-  selector: 'app-dialog-add-sale',
-  templateUrl: './dialog-add-sale.component.html',
-  styleUrls: ['./dialog-add-sale.component.scss'],
+  selector: 'app-dialog-add-shopping',
+  templateUrl: './dialog-add-shopping.component.html',
+  styleUrls: ['./dialog-add-shopping.component.scss'],
   providers: [ProductsService]
 })
-export class DialogAddSaleComponent implements OnInit {
+export class DialogAddShoppingComponent implements OnInit {
 
   form: FormGroup;
   productsList: any[] = [];
@@ -23,12 +23,13 @@ export class DialogAddSaleComponent implements OnInit {
   statusResponse = true;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogAddSaleComponent>,
+    public dialogRef: MatDialogRef<DialogAddShoppingComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private productService: ProductsService,
-    private salesService: SalesService,
+    private shoppingService: ShoppingService,
     private notifications: NotificationsService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -72,24 +73,18 @@ export class DialogAddSaleComponent implements OnInit {
     }
   }
 
-  private _filter(product: string): any[] {
-    const filterValue = product.toLowerCase();
-
-    return this.productsList.filter(option => option.producto.toLowerCase().includes(filterValue));
-  }
-
   onCancel(): void {
     this.dialogRef.close(false);
   }
 
   onSave(): void {
     if (this.form.valid) {
-      this.entity.idVenta = +this.data.idVenta;
-      this.entity.cantidad = this.form.get('quantity').value.toString();
-      this.entity.precio_unitarui = this.form.get('price').value;
+      this.entity.idCompra = +this.data.idCompra;
+      this.entity.cantidad = +this.form.get('quantity').value.toString();
+      this.entity.precio_costo_unitario = this.form.get('price').value;
       this.statusResponse = false;
 
-      this.salesService.createDetail(this.entity).subscribe(response => {
+      this.shoppingService.createDetail(this.entity).subscribe(response => {
         if (response) {
           this.statusResponse = true;
           this.dialogRef.close(response);
@@ -100,5 +95,11 @@ export class DialogAddSaleComponent implements OnInit {
         this.notifications.error('Error', error);
       });
     }
+  }
+
+  private _filter(product: string): any[] {
+    const filterValue = product.toLowerCase();
+
+    return this.productsList.filter(option => option.producto.toLowerCase().includes(filterValue));
   }
 }

@@ -8,6 +8,14 @@ import {DialogAddSaleComponent} from './sales/dialog-add-sale/dialog-add-sale.co
 import {ClientsService} from '../moduleOperations/services/clients.service';
 import {SalesService} from './services/sales.service';
 import {ProductDescriptionPipe} from './sales/product-description.pipe';
+import {ClientDescriptionPipe} from './pipes/client-description.pipe';
+import {ProductsService} from '../moduleOperations/services/products.service';
+import {EmployeesService} from '../securityModule/services/employees.service';
+import {EmployeeDescriptionPipe} from './pipes/employee-description.pipe';
+import {ShoppingComponent} from './shopping/shopping.component';
+import {DialogAddShoppingComponent} from './shopping/dialog-add-shopping/dialog-add-shopping.component';
+import {ShoppingService} from './services/shopping.service';
+import {LogShoppingComponent} from './log-shopping/log-shopping.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +23,11 @@ import {ProductDescriptionPipe} from './sales/product-description.pipe';
     LogSalesComponent,
     DialogAddSaleComponent,
     ProductDescriptionPipe,
+    ClientDescriptionPipe,
+    EmployeeDescriptionPipe,
+    ShoppingComponent,
+    DialogAddShoppingComponent,
+    LogShoppingComponent,
   ],
   imports: [
     ShareModule,
@@ -25,7 +38,10 @@ import {ProductDescriptionPipe} from './sales/product-description.pipe';
   ],
   providers: [
     ClientsService,
-    SalesService
+    ProductsService,
+    EmployeesService,
+    SalesService,
+    ShoppingService
   ]
 })
 export class SalesModule {

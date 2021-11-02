@@ -4,10 +4,10 @@ import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../../shared/constants';
 
 @Injectable()
-export class SalesService {
+export class ShoppingService {
 
-  url = `${API_URL}ventas`;
-  urlDetail = `${API_URL}VentasDetalle`;
+  url = `${API_URL}compras`;
+  urlDetail = `${API_URL}ComprasDetalle`;
 
   constructor(
     private http: HttpClient
@@ -43,6 +43,6 @@ export class SalesService {
   }
 
   queryDetailSale(id?: any): Observable<any> {
-    return this.http.get(`${this.urlDetail}/Getall/${id}`);
+    return this.http.get(`${this.urlDetail}/getallcom/${id}`);
   }
 }

@@ -4,13 +4,14 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ClientsService} from '../../moduleOperations/services/clients.service';
 import {EmployeesService} from '../../securityModule/services/employees.service';
 import {Router} from '@angular/router';
+import {ShoppingService} from '../services/shopping.service';
 
 @Component({
-  selector: 'app-log-sales',
-  templateUrl: './log-sales.component.html',
-  styleUrls: ['./log-sales.component.scss']
+  selector: 'app-log-shopping',
+  templateUrl: './log-shopping.component.html',
+  styleUrls: ['./log-shopping.component.scss']
 })
-export class LogSalesComponent implements OnInit {
+export class LogShoppingComponent implements OnInit {
 
   dataSource;
   displayedColumns: string[] = ['date', 'sale', 'saleNumber', 'series', 'client', 'employee', 'status'];
@@ -20,7 +21,7 @@ export class LogSalesComponent implements OnInit {
   validData = true;
 
   constructor(
-    private salesService: SalesService,
+    private shoppingService: ShoppingService,
     private clientService: ClientsService,
     private employeesService: EmployeesService,
     private router: Router,
@@ -36,11 +37,11 @@ export class LogSalesComponent implements OnInit {
     this.queryClients();
     this.queryEmployees();
 
-    this.salesService.query().subscribe(response => {
+    this.shoppingService.query().subscribe(response => {
       if (response) {
         this.validData = true;
         this.dataSource = new MatTableDataSource(response);
-        console.log(this.dataSource)
+        console.log(this.dataSource);
       } else {
         this.validData = false;
         this.dataSource = new MatTableDataSource([]);

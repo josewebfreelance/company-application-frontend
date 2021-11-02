@@ -1,17 +1,22 @@
-<div class="container-fluid">
+<div class="custom-loader vivify fadeIn" *ngIf="!validateResponse">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="container login-component">
+  <h2 class="text-center m-3">Iniciar sesión</h2>
   <form [formGroup]="form" (submit)="onSubmit()">
-    <div class="row col-6 offset-3 m-5">
-      <mat-form-field class="col-6" appearance="outline">
+    <div class="">
+      <mat-form-field class="col-12" appearance="outline">
         <mat-label>Usuario</mat-label>
         <input matInput formControlName="user" required maxlength="50">
       </mat-form-field>
 
-      <mat-form-field class="col-6" appearance="outline">
+      <mat-form-field class="col-12" appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <input matInput formControlName="pass" required maxlength="50">
+        <input matInput type="password" formControlName="pass" required maxlength="50">
       </mat-form-field>
 
-      <button mat-flat-button color="primary">Continuar</button>
+      <button class="col-12" mat-flat-button color="primary">Continuar</button>
     </div>
   </form>
 </div>

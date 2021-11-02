@@ -5,7 +5,6 @@ import {map, startWith} from 'rxjs/operators';
 import {DateAdapter} from '@angular/material/core';
 import {NitValidator} from '../../shared/validators/nit.validator';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {DialogAddSaleComponent} from './dialog-add-sale/dialog-add-sale.component';
 import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {ClientsService} from '../../moduleOperations/services/clients.service';
 import {SalesService} from '../services/sales.service';
@@ -14,7 +13,9 @@ import {DeleteConfirmationComponent} from '../../module-share/delete-confirmatio
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationsService} from 'angular2-notifications';
 import {ProductsService} from '../../moduleOperations/services/products.service';
-import {SecurityService} from '../../securityModule/services/security.service';
+import {DialogAddShoppingComponent} from './dialog-add-shopping/dialog-add-shopping.component';
+import {ProvidersService} from '../../moduleOperations/services/providers.service';
+import {ShoppingService} from '../services/shopping.service';
 
 export interface User {
   nit: string;
@@ -22,13 +23,13 @@ export interface User {
 }
 
 @Component({
-  selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss'],
+  selector: 'app-shopping',
+  templateUrl: './shopping.component.html',
+  styleUrls: ['./shopping.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [ProductsService]
 })
-export class SalesComponent implements OnInit {
+export class ShoppingComponent implements OnInit {
   @ViewChild(MatAutocompleteTrigger, {read: MatAutocompleteTrigger}) autoComplete: MatAutocompleteTrigger;
 
   form: FormGroup;
@@ -37,28 +38,30 @@ export class SalesComponent implements OnInit {
     {nit: '234567', name: 'Shelley'},
     {nit: '456789', name: 'Igor'}
   ];
-  listClients: any[] = [];
+  listProvidersComplete: any[] = [];
+  listProvidersFilter: any[] = [];
   productsList: any[] = [];
   filteredOptions: Observable<User[]>;
 
   dataSource: any[] = [];
   displayedColumns: string[] = ['no', 'quantity', 'description', 'value', 'subTotal', 'actions'];
 
-  entityClient: any = {};
-  entitySale: any = {};
+  entityProvider: any = {};
+  entityShopping: any = {};
   countTotal = 0;
   entityLoad = true;
 
   constructor(
     private dateAdapter: DateAdapter<any>,
     public dialog: MatDialog,
-    private clientService: ClientsService,
     private salesService: SalesService,
+    private shoppingService: ShoppingService,
     private route: ActivatedRoute,
     private router: Router,
     private matDialog: MatDialog,
     private notifications: NotificationsService,
     private productsService: ProductsService,
+    private providersService: ProvidersService
   ) {
   }
 
@@ -66,35 +69,34 @@ export class SalesComponent implements OnInit {
     this.dateAdapter.setLocale('es');
     this.route.params.subscribe((params: any) => {
       if (params) {
-        console.log(params)
-        if (params.sale) {
-          this.entitySale.idVenta = params.sale;
+        if (params.id) {
+          this.entityShopping.idCompra = params.id;
         }
       }
 
       this.form = new FormGroup({
-        nit: new FormControl(null, [NitValidator.verifyNIT(true, false)]),
+        provider: new FormControl(null, [Validators.required]),
         name: new FormControl(null, [Validators.required]),
-        address: new FormControl('Ciudad', [Validators.required]),
         date: new FormControl(new Date(), [Validators.required]),
         idClient: new FormControl(null)
       });
 
-      this.queryClients();
+      this.queryProvidersComplete();
       this.queryProducts();
       this.findSale();
     });
 
-    this.filteredOptions = this.form.get('nit').valueChanges
+    console.log(this.form.get('provider'))
+    this.filteredOptions = this.form.get('provider').valueChanges
       .pipe(
         startWith(''),
-        map(value => typeof value === 'string' ? value : value.nit),
-        map(nit => nit ? this._filter(nit) : this.listClients.slice())
+        map(value => typeof value === 'string' ? value : value.nit || value.proveedor),
+        map(nit => nit ? this._filter(nit) : this.listProvidersComplete.slice())
       );
   }
 
   loadAll(): void {
-    this.salesService.queryDetailSale(this.entitySale.idVenta).subscribe(response => {
+    this.shoppingService.queryDetailSale(this.entityShopping.idCompra).subscribe(response => {
       if (response && response.length > 0) {
         this.dataSource = response;
       } else {
@@ -105,9 +107,9 @@ export class SalesComponent implements OnInit {
   }
 
   endSale(): void {
-    this.entitySale.estadoVenta = 2;
-    this.entitySale.idVenta = +this.entitySale.idVenta;
-    this.salesService.update(this.entitySale).subscribe(response => {
+    this.entityShopping.estadoVenta = 2;
+    this.entityShopping.no_orden_compra = +this.entityShopping.no_orden_compra;
+    this.shoppingService.update(this.entityShopping).subscribe(response => {
       console.log(response);
       this.findSale();
     });
@@ -115,25 +117,28 @@ export class SalesComponent implements OnInit {
 
   findSale(): void {
     this.entityLoad = false;
-    if (this.entitySale.idVenta) {
-      this.salesService.find(this.entitySale.idVenta).subscribe(response => {
+    if (this.entityShopping.idCompra) {
+      this.shoppingService.find(this.entityShopping.idCompra).subscribe(response => {
         if (response) {
-          this.entitySale = response;
+          this.entityShopping = response;
           this.entityLoad = true;
-          if (this.entitySale.estadoVenta === 2 || this.entitySale.estadoVenta === 3) {
+          if (this.entityShopping.estadoVenta === 2 || this.entityShopping.estadoVenta === 3) {
             this.form.disable();
           } else {
             this.form.enable();
           }
 
-          if (response.idCliente) {
-            this.clientService.find(response.idCliente).subscribe(clientResponse => {
+          if (response.idProveedor) {
+            this.productsService.find(response.idProveedor).subscribe(clientResponse => {
               if (clientResponse) {
-                const res = new Date(response.fechafactura);
+                const res = new Date(response.fecha_orden);
                 res.setDate(res.getDate() + 1);
 
-                this.form.get('nit').setValue(clientResponse.nit);
-                this.form.get('name').setValue(`${clientResponse.nombres} ${clientResponse.apellidos ? clientResponse.apellidos : ''}`);
+                this.providersService.find(response.idProveedor).subscribe(responseProvider => {
+                  console.log('prov', responseProvider);
+                  this.form.get('provider').setValue(responseProvider.nit ? responseProvider.nit : '');
+                  this.form.get('name').setValue(responseProvider.proveedor ? responseProvider.proveedor : '');
+                });
                 this.form.get('date').setValue(res);
 
                 this.loadAll();
@@ -149,10 +154,20 @@ export class SalesComponent implements OnInit {
     }
   }
 
-  queryClients(): void {
-    this.clientService.query().subscribe(response => {
+  queryProvidersComplete(): void {
+    this.providersService.query().subscribe(response => {
       if (response && response.length > 0) {
-        this.listClients = response;
+        response.forEach(item => {
+          const tempObj = {
+            direccion: item.direccion,
+            idProveedor: item.idProveedor,
+            nit: item.nit,
+            proveedor: item.proveedor,
+            telefono: item.telefono
+          };
+          this.listProvidersComplete.push(tempObj);
+          this.listProvidersFilter.push(tempObj);
+        });
       }
     });
   }
@@ -165,68 +180,49 @@ export class SalesComponent implements OnInit {
     });
   }
 
-  displayFn(user: string): string {
-    return user ? user : '';
-  }
-
-  validateValueNit(): void {
-    const control = this.form.get('nit');
-    if (control.value === '' || control.value === null || control.value === undefined || control.invalid) {
-      this.form.get('name').setValue(null);
-    }
-  }
-
-  private _filter(nit: string): User[] {
-    const filterValue = nit.toLowerCase();
-
-    const found = this.listClients.filter(option => option.nit.toLowerCase().indexOf(filterValue) === 0);
-    console.log(found)
-    if (found.length > 0) {
-      this.form.get('name').setValue(`${found[0].nombres} ${found[0].apellidos}`);
-    } else {
-      this.form.get('name').setValue(null);
-    }
-
-    return found;
+  displayFn(value: string): string {
+    return value ? value : '';
   }
 
   createSale(): void {
-    this.entitySale.serie = null;
-    this.entitySale.fechaFactura = this.form.get('date').value;
-    // this.entitySale.idCliente = this.form.get('idClient').value;
-    this.entitySale.idEmpleado = 1;
-    this.entitySale.estadoVenta = 1;
-    this.entitySale.serie = '12';
-    console.log(this.entitySale)
-    this.salesService.create(this.entitySale).subscribe(response => {
-      this.router.navigate([`sales/sale/${response.idVenta}`]).then();
+    const provider = this.form.get('provider').value;
+    const find = this.listProvidersFilter.find(item => item.nit === provider);
+
+    if (find !== undefined) {
+      this.entityShopping.idProveedor = find.idProveedor;
+    }
+
+    this.entityShopping.no_orden_compra = 1;
+    this.entityShopping.fecha_orden = this.form.get('date').value;
+    this.entityShopping.estadoCompra = 1;
+
+    this.shoppingService.create(this.entityShopping).subscribe(response => {
+      this.router.navigate([`sales/shopping/${response.no_orden_compra}`]).then();
     });
   }
 
   openAdd(): void {
-    if (!this.entitySale.idVenta) {
+    if (!this.entityShopping.no_orden_compra) {
       if (this.form.valid) {
-        const nitValue = this.form.get('nit').value;
-        const findNit = this.listClients.find(item => item.nit === nitValue);
+        const providerValue = this.form.get('provider').value;
+        const findProvider = this.listProvidersComplete.find(item => item.nit === providerValue);
 
-        console.log(findNit)
-        if (findNit === undefined) {
-          this.entityClient.nombres = this.form.get('name').value;
-          this.entityClient.apellidos = null;
-          this.entityClient.nit = this.form.get('nit').value;
-          this.entityClient.genero = null;
-          this.entityClient.telefono = null;
-          this.entityClient.correo = null;
+        console.log(findProvider);
+        if (findProvider === undefined) {
+          this.entityProvider.proveedor = this.form.get('name').value;
+          this.entityProvider.nit = this.form.get('provider').value;
+          this.entityProvider.direccion = null;
+          this.entityProvider.telefono = null;
 
-          this.clientService.create(this.entityClient).subscribe(response => {
+          this.providersService.create(this.entityProvider).subscribe(response => {
             console.log(response);
             if (response) {
-              this.entitySale.idCliente = response.idcliente;
+              this.entityShopping.idProveedor = response.idProveedor;
               this.createSale();
             }
           });
         } else {
-          this.entitySale.idCliente = findNit.idcliente;
+          this.entityShopping.idProveedor = findProvider.idProveedor;
           this.createSale();
         }
       }
@@ -235,13 +231,14 @@ export class SalesComponent implements OnInit {
         width: '40vw',
         disableClose: true,
         data: {
-          idVenta: this.entitySale.idVenta
+          idCompra: this.entityShopping.idCompra
         }
       };
 
-      const dialog = this.dialog.open(DialogAddSaleComponent, config);
+      const dialog = this.dialog.open(DialogAddShoppingComponent, config);
       dialog.afterClosed().subscribe(response => {
-        if (response && response.idVenta_detalle) {
+        console.log(response)
+        if (response && response.idCompra) {
           this.loadAll();
         }
       });
@@ -257,7 +254,7 @@ export class SalesComponent implements OnInit {
     response.afterClosed().subscribe(
       (data: boolean) => {
         if (data === true) {
-          this.salesService.delete(item.idVenta_detalle).subscribe(
+          this.shoppingService.delete(item.idVenta_detalle).subscribe(
             () => {
               this.notifications.success('Correcto', 'La acción se realizó con éxito.');
               this.loadAll();
@@ -275,14 +272,27 @@ export class SalesComponent implements OnInit {
     this.dataSource.forEach(item => {
       this.countTotal += (+item.cantidad * item.precio_unitarui);
     });
-    console.log('data', this.dataSource)
+
     if (this.dataSource.length === 0) {
       this.countTotal = 0;
     }
   }
 
   addItem(): void {
-    this.router.navigate([`sales/sale`]).then();
+    this.router.navigate([`sales/shopping`]).then();
+  }
+
+  private _filter(value: string): User[] {
+    const filterValue = value.toLowerCase();
+
+    const found = this.listProvidersComplete.filter(option => (option.nit.toLowerCase().indexOf(filterValue) === 0 || option.proveedor.toLowerCase().indexOf(filterValue) === 0));
+    if (found.length > 0) {
+      this.form.get('name').setValue(`${found[0].proveedor}`);
+    } else {
+      this.form.get('name').setValue(null);
+    }
+
+    return found;
   }
 
 }

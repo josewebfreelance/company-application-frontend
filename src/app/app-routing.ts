@@ -2,11 +2,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './securityModule/login/login.component';
 
 export const APP_ROUTES: Routes = [
-  {path: '', redirectTo: '/sales/sale', pathMatch: 'full'},
-/*
+  // {path: '', redirectTo: '/sales/sale', pathMatch: 'full'},
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
-*/
   {
     path: 'sales',
     loadChildren: () => import('./moduleSales/sales.module').then(s => s.SalesModule),
