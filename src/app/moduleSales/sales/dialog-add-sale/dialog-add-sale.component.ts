@@ -31,11 +31,13 @@ export class DialogAddSaleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.data)
     this.form = new FormGroup({
       quantity: new FormControl(1, [Validators.required]),
       product: new FormControl(null, [Validators.required]),
       price: new FormControl(null, [Validators.required]),
       total: new FormControl({value: 0.00, disabled: true}),
+      stock: new FormControl(null, [Validators.required])
     });
 
     this.filteredOptions = this.form.get('product').valueChanges
@@ -60,6 +62,7 @@ export class DialogAddSaleComponent implements OnInit {
   }
 
   validateOnChange(): void {
+    const controlStock = this.form.get('stock');
     const controlProduct = this.form.get('product');
     const controlQuantity = this.form.get('quantity');
     const controlPrice = this.form.get('price');
@@ -67,8 +70,14 @@ export class DialogAddSaleComponent implements OnInit {
 
     if (controlProduct.valid) {
       this.entity.idProducto = controlProduct.value.idProducto;
+      controlStock.setValue(controlProduct.value.existencia);
       controlPrice.setValue(controlProduct.value.precio_venta);
       controlTotal.setValue(+controlQuantity.value * +controlProduct.value.precio_venta);
+
+      if (controlQuantity.value > controlStock.value) {
+        controlQuantity.setErrors({stockOut: true});
+        this.notifications.info('Importante', 'Existencia insuficiente');
+      }
     }
   }
 

@@ -107,8 +107,8 @@ export class ShoppingComponent implements OnInit {
   }
 
   endSale(): void {
-    this.entityShopping.estadoVenta = 2;
-    this.entityShopping.no_orden_compra = +this.entityShopping.no_orden_compra;
+    this.entityShopping.estadoCompra = 2;
+    this.entityShopping.idCompra = +this.entityShopping.idCompra;
     this.shoppingService.update(this.entityShopping).subscribe(response => {
       console.log(response);
       this.findSale();
@@ -122,7 +122,7 @@ export class ShoppingComponent implements OnInit {
         if (response) {
           this.entityShopping = response;
           this.entityLoad = true;
-          if (this.entityShopping.estadoVenta === 2 || this.entityShopping.estadoVenta === 3) {
+          if (this.entityShopping.estadoCompra === 2 || this.entityShopping.estadoCompra === 3) {
             this.form.disable();
           } else {
             this.form.enable();
@@ -270,7 +270,7 @@ export class ShoppingComponent implements OnInit {
 
   calculateTotal(): void {
     this.dataSource.forEach(item => {
-      this.countTotal += (+item.cantidad * item.precio_unitarui);
+      this.countTotal += (+item.cantidad * item.precio_costo_unitario);
     });
 
     if (this.dataSource.length === 0) {

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Options} from 'angular2-notifications';
 import {SecurityService} from './securityModule/services/security.service';
 import {ValidateSessionService} from './securityModule/services/validate-session.service';
+import {Cookie} from 'ng2-cookies';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ import {ValidateSessionService} from './securityModule/services/validate-session
 export class AppComponent implements OnInit {
   title = 'company-frontend';
   isLogin = false;
+  user: any = {};
 
   notificationOptions: Options = {
     timeOut: 6000
@@ -46,7 +49,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private securityService: SecurityService,
-    private validateSession: ValidateSessionService
+    private validateSession: ValidateSessionService,
+    private router: Router,
   ) {
   }
 
@@ -56,6 +60,17 @@ export class AppComponent implements OnInit {
     this.validateSession.status.subscribe(response => {
       this.isLogin = response;
       this.securityService.validateRedirection();
+
+      this.user.currentUser = Cookie.get('user');
+      this.user.initial = this.user.currentUser.toString().substring(0, 1);
     });
+  }
+
+  logout(): void {
+    Cookie.delete('isLogin');
+    Cookie.delete('user');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 }

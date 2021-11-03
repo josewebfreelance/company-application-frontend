@@ -36,6 +36,27 @@ export class BrandsComponent implements OnInit {
     });
   }
 
+  download(): void {
+    this.service.query().subscribe(response => {
+      if (response && response.length > 0) {
+        let csv = 'No.,Marca\n';
+
+        response.forEach((row) => {
+          const tempRow = Object.values(row);
+          csv += tempRow.join(',');
+          csv += '\n';
+        });
+
+        const hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+
+        hiddenElement.download = 'Marcas.csv';
+        hiddenElement.click();
+      }
+    });
+  }
+
   loadAll(): void {
     this.service.query().subscribe(response => {
       if (response && response.length > 0) {

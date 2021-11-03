@@ -7,9 +7,9 @@
     <h1 class="col-6">Compras</h1>
     <div class="col-6 d-flex align-items-center justify-content-end pe-5">
       <mat-chip-list aria-label="Fish selection">
-        <mat-chip color="primary" class="state" *ngIf="entityShopping.estadoVenta"
-                  [ngClass]="{'info-bg': entityShopping.estadoVenta === 1, 'success-bg': entityShopping.estadoVenta === 2, 'danger-bg': entityShopping.estadoVenta === 3}" selected>
-          {{entityShopping.estadoVenta === 1 ? 'En proceso' : entityShopping.estadoVenta === 2 ? 'Finalizada' : entityShopping.estadoVenta === 3 ? 'Anulada' : ''}}
+        <mat-chip color="primary" class="state" *ngIf="entityShopping.estadoCompra"
+                  [ngClass]="{'info-bg': entityShopping.estadoCompra === 1, 'success-bg': entityShopping.estadoCompra === 2, 'danger-bg': entityShopping.estadoCompra === 3}" selected>
+          {{entityShopping.estadoCompra === 1 ? 'En proceso' : entityShopping.estadoCompra === 2 ? 'Finalizada' : entityShopping.estadoCompra === 3 ? 'Anulada' : ''}}
         </mat-chip>
       </mat-chip-list>
     </div>
@@ -46,13 +46,13 @@
   <div class="row mt-2">
     <div>
       <button type="button" mat-flat-button color="primary" (click)="openAdd()"
-              [disabled]="form.invalid || entityShopping.estadoVenta === 2 || entityShopping.estadoVenta === 3">
+              [disabled]="form.invalid || entityShopping.estadoCompra === 2 || entityShopping.estadoCompra === 3">
         Agregar detalle
       </button>
       <button type="button" mat-flat-button color="primary" class="ms-3 state success-bg"
-              [disabled]="entityShopping.estadoVenta === 2 || entityShopping.estadoVenta === 3"
+              [disabled]="entityShopping.estadoCompra === 2 || entityShopping.estadoCompra === 3"
               (click)="endSale()">
-        Finalizar factura <mat-icon>arrow_forward</mat-icon>
+        Finalizar compra <mat-icon>arrow_forward</mat-icon>
       </button>
 
       <div class="mat-elevation-z1 table-content mt-3">
@@ -75,12 +75,12 @@
 
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef> Valor </th>
-            <td mat-cell *matCellDef="let element"> {{element.precio_unitarui | number: '1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.precio_costo_unitario | number: '1.2-2'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="subTotal">
             <th mat-header-cell *matHeaderCellDef> Sub total </th>
-            <td mat-cell *matCellDef="let element"> {{(element.cantidad * element.precio_unitarui) | number: '1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element"> {{(element.cantidad * element.precio_costo_unitario) | number: '1.2-2'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
@@ -99,7 +99,7 @@
       </div>
 
       <div class="row mt-3 position-relative">
-        <button mat-fab type="button" color="primary" class="btn-add state success-bg" (click)="addItem()" matTooltip="Nueva venta">
+        <button mat-fab type="button" color="primary" class="btn-add state success-bg" (click)="addItem()" matTooltip="Nueva compra">
           <mat-icon>add</mat-icon>
         </button>
 

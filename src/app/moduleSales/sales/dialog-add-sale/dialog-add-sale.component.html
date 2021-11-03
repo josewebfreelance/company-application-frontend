@@ -22,17 +22,22 @@
           </mat-autocomplete>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="col-4">
+        <mat-form-field appearance="outline" class="col-3">
+          <mat-label>Exitencia</mat-label>
+          <input matInput formControlName="stock" (change)="validateOnChange()">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-3">
           <mat-label>Cantidad</mat-label>
           <input matInput formControlName="quantity" (change)="validateOnChange()">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="col-4">
+        <mat-form-field appearance="outline" class="col-3">
           <mat-label>P. unitario</mat-label>
           <input matInput formControlName="price" (change)="validateOnChange()">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="col-4">
+        <mat-form-field appearance="outline" class="col-3">
           <mat-label>Total</mat-label>
           <input matInput formControlName="total">
         </mat-form-field>

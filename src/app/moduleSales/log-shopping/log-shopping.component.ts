@@ -5,6 +5,7 @@ import {ClientsService} from '../../moduleOperations/services/clients.service';
 import {EmployeesService} from '../../securityModule/services/employees.service';
 import {Router} from '@angular/router';
 import {ShoppingService} from '../services/shopping.service';
+import {ProvidersService} from '../../moduleOperations/services/providers.service';
 
 @Component({
   selector: 'app-log-shopping',
@@ -14,15 +15,15 @@ import {ShoppingService} from '../services/shopping.service';
 export class LogShoppingComponent implements OnInit {
 
   dataSource;
-  displayedColumns: string[] = ['date', 'sale', 'saleNumber', 'series', 'client', 'employee', 'status'];
+  displayedColumns: string[] = ['date', 'order', 'provider', 'status'];
 
-  listClients: any[] = [];
+  listProviders: any[] = [];
   listEmployees: any[] = [];
   validData = true;
 
   constructor(
     private shoppingService: ShoppingService,
-    private clientService: ClientsService,
+    private providersService: ProvidersService,
     private employeesService: EmployeesService,
     private router: Router,
   ) {
@@ -41,7 +42,6 @@ export class LogShoppingComponent implements OnInit {
       if (response) {
         this.validData = true;
         this.dataSource = new MatTableDataSource(response);
-        console.log(this.dataSource);
       } else {
         this.validData = false;
         this.dataSource = new MatTableDataSource([]);
@@ -50,9 +50,9 @@ export class LogShoppingComponent implements OnInit {
   }
 
   queryClients(): void {
-    this.clientService.query().subscribe(response => {
+    this.providersService.query().subscribe(response => {
       if (response && response.length > 0) {
-        this.listClients = response;
+        this.listProviders = response;
       }
     });
   }
@@ -71,7 +71,7 @@ export class LogShoppingComponent implements OnInit {
   }
 
   viewDetail(sale: any): void {
-    this.router.navigate([`sales/sale/${sale}`]).then();
+    this.router.navigate([`sales/shopping/${sale}`]).then();
   }
 
 }

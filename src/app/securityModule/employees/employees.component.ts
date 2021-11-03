@@ -63,7 +63,7 @@ export class EmployeesComponent implements OnInit {
   download(): void {
     this.service.query().subscribe(response => {
       if (response && response.length > 0) {
-        let csv = 'id,Nombre,Apellido,Dirección,Teléfono,DPI,Género,Fecha nacimiento,Puesto,Fecha inicio labores, Fecha ingreso\n';
+        let csv = 'No.,Nombre,Apellido,Dirección,Teléfono,DPI,Género,Fecha nacimiento,Puesto,Fecha inicio labores, Fecha ingreso\n';
 
         response.forEach((row) => {
           const tempRow = Object.values(row);

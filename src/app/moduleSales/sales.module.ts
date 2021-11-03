@@ -16,6 +16,7 @@ import {ShoppingComponent} from './shopping/shopping.component';
 import {DialogAddShoppingComponent} from './shopping/dialog-add-shopping/dialog-add-shopping.component';
 import {ShoppingService} from './services/shopping.service';
 import {LogShoppingComponent} from './log-shopping/log-shopping.component';
+import {ProvidersDescriptionPipe} from './pipes/providers-description.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {LogShoppingComponent} from './log-shopping/log-shopping.component';
     ShoppingComponent,
     DialogAddShoppingComponent,
     LogShoppingComponent,
+    ProvidersDescriptionPipe
   ],
   imports: [
     ShareModule,

@@ -1,6 +1,10 @@
 .log-shopping-component {
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 2rem;
+
   .table-content {
-    height: calc(100vh - (89px + 48px + 15px + 4rem));
+    height: calc(100vh - (89px + 48px + 15px + 4rem + 4rem));
 
     .mat-table {
       .custom-status{

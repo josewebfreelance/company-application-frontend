@@ -1,5 +1,6 @@
 .simple-notification {
   border-radius: 16px;
+  z-index: 999;
 
   .sn-progress-loader {
     left: 4% !important;

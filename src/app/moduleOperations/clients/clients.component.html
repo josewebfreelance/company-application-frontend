@@ -3,9 +3,15 @@
 </div>
 
 <div class="row clients-component">
-  <div class="col-12">
+  <div class="col-10">
     <h3 class="ps-3">Clientes</h3>
   </div>
+  <div class="col-2 text-center">
+    <button type="button" class="btn-download" mat-fab (click)="download()" matTooltip="Descargar CSV">
+      <mat-icon>description</mat-icon>
+    </button>
+  </div>
+
   <div class="col-3 sidenav-crud ps-2">
     <mat-list data-simplebar="">
       <mat-list-item *ngFor="let item of list" (click)="loadForm(item)">

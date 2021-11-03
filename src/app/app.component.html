@@ -1,12 +1,13 @@
 <block-ui></block-ui>
+<simple-notifications [options]="notificationOptions"></simple-notifications>
 <div class="container-fluid d-flex pe-0" [ngClass]="{'is-login': !isLogin}">
   <div class="col-2 navigation" *ngIf="isLogin">
     <div class="header-menu">
       <div class="initials">
-        JL
+        {{user.initial}}
       </div>
-      <p class="user">Jose Lemus</p>
-      <p class="rol">Administrador</p>
+      <p class="user">{{user.currentUser}}</p>
+      <!--<p class="rol">Administrador</p>-->
     </div>
 
     <div class="menu-list" data-simplebar="">
@@ -20,6 +21,7 @@
         </mat-list>
       </div>
     </div>
+    <button class="mt-2 col-12 btn-logout" type="button" mat-raised-button color="primary" (click)="logout()">Cerrar sesión</button>
 
   </div>
   <div [ngClass]="{'col-12 login-content': !isLogin, 'content col-10 pt-4 pb-3 ps-3 pe-4': isLogin}">
@@ -27,4 +29,3 @@
   </div>
 </div>
 
-<simple-notifications [options]="notificationOptions"></simple-notifications>

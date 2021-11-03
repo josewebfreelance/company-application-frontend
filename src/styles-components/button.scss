@@ -53,8 +53,14 @@ button {
 
   &.btn-download {
     position: absolute;
-    top: 35px;
+    top: 60px;
     background-color: map-get($alternative-action-colors, success) !important;
+  }
+
+  &.btn-logout {
+    background-color: map-get($action-colors, error) !important;
+    border-radius: 100px;
+    font-weight: bold;
   }
 }
 
