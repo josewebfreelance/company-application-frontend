@@ -21,6 +21,7 @@ export class ProductsFormComponent implements OnInit {
   brandsList: any[] = [];
   form: FormGroup;
   entity: any = {};
+  photo;
 
   constructor(
     private service: ProductsService,
@@ -39,7 +40,7 @@ export class ProductsFormComponent implements OnInit {
       product: new FormControl(null, [Validators.required]),
       brand: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
-      image: new FormControl(null, [Validators.required]),
+      image: new FormControl(null),
       costPrice: new FormControl(null, [Validators.required, Validators.max(9999999999)]),
       costSale: new FormControl(null, [Validators.required, Validators.max(9999999999)]),
       stock: new FormControl(null, [Validators.required, Validators.max(9999999999)]),
@@ -65,7 +66,8 @@ export class ProductsFormComponent implements OnInit {
       this.form.get('product').setValue(item.producto);
       this.form.get('brand').setValue(item.idMarca.toString());
       this.form.get('description').setValue(item.descripcion);
-      this.form.get('image').setValue(item.imagen);
+      // this.form.get('image').setValue(item.imagen);
+      this.photo = item.imagen;
       this.form.get('costPrice').setValue(item.precio_costo);
       this.form.get('costSale').setValue(item.precio_venta);
       this.form.get('stock').setValue(item.existencia);
@@ -74,7 +76,8 @@ export class ProductsFormComponent implements OnInit {
       this.form.get('product').setValue(null);
       this.form.get('brand').setValue(null);
       this.form.get('description').setValue(null);
-      this.form.get('image').setValue(null);
+      this.photo = null;
+      // this.form.get('image').setValue(null);
       this.form.get('costPrice').setValue(null);
       this.form.get('costSale').setValue(null);
       this.form.get('stock').setValue(null);
@@ -82,10 +85,11 @@ export class ProductsFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.photo)
     this.entity.producto = this.form.get('product').value;
     this.entity.idMarca = +this.form.get('brand').value;
     this.entity.descripcion = this.form.get('description').value;
-    this.entity.imagen = this.form.get('image').value;
+    this.entity.imagen = this.photo;
     this.entity.precio_costo = +this.form.get('costPrice').value;
     this.entity.precio_venta = +this.form.get('costSale').value;
     this.entity.existencia = +this.form.get('stock').value;
@@ -107,6 +111,17 @@ export class ProductsFormComponent implements OnInit {
           this.notifications.error('Error', error);
         });
       }
+    }
+  }
+
+  handleImage(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.photo = reader.result;
+
+      reader.readAsDataURL(file);
     }
   }
 

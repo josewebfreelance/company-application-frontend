@@ -37,12 +37,21 @@
           <input matInput formControlName="description" required maxlength="50">
         </mat-form-field>
       </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 photo">
+        <div>
+          <input type="file" name="image" (change)="handleImage($event)">
+          <img [src]="photo" alt="">
+        </div>
+      </div>
+
+<!--
       <div class="col-4">
         <mat-form-field class="col-12" appearance="outline">
           <mat-label>Imagen</mat-label>
           <input matInput formControlName="image" required maxlength="50">
         </mat-form-field>
       </div>
+-->
     </div>
   </div>
 

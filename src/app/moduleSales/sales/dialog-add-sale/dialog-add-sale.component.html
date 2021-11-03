@@ -17,7 +17,8 @@
           <input type="text" matInput formControlName="product" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="validateOnChange()">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option.producto}}
+              <img class="example-option-img mr-3" aria-hidden [src]="option.imagen" height="25">
+              <span>{{option.producto}}</span>
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>

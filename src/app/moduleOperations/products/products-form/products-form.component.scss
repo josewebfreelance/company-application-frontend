@@ -1,0 +1,56 @@
+.photo {
+  div {
+    /*
+    width: 360px;
+    */
+    height: 275px;
+    margin-top: 1rem;
+    border: 2px dashed #c1c1c1;
+    border-radius: 16px;
+    position: relative;
+    display: flex;
+
+    &:before {
+      font-family: 'Material Icons';
+      content: "search";
+      -webkit-font-feature-settings: 'liga';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      font-size: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: gray;
+    }
+
+    &:after {
+      content: "Seleccione una foto para cargar...";
+      position: absolute;
+      height: 75%;
+      width: 100%;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: gray;
+      top: 25%;
+    }
+
+    input {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      z-index: 3;
+    }
+
+    img {
+      max-width: 260px;
+      margin: auto;
+      max-height: 260px;
+      z-index: 2;
+      background-color: #fff;
+    }
+  }
+}
