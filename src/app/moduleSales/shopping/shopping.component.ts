@@ -86,7 +86,14 @@ export class ShoppingComponent implements OnInit {
       this.findSale();
     });
 
-    console.log(this.form.get('provider'))
+    this.route.queryParams.subscribe(params => {
+      if (params) {
+        if (params.new) {
+          this.openAdd();
+        }
+      }
+    });
+
     this.filteredOptions = this.form.get('provider').valueChanges
       .pipe(
         startWith(''),
@@ -110,8 +117,10 @@ export class ShoppingComponent implements OnInit {
     this.entityShopping.estadoCompra = 2;
     this.entityShopping.idCompra = +this.entityShopping.idCompra;
     this.shoppingService.update(this.entityShopping).subscribe(response => {
-      console.log(response);
+      this.notifications.success('Correcto', 'La compra se finalizó correctamente.');
       this.findSale();
+    }, error => {
+      this.notifications.error('Error', error);
     });
   }
 
@@ -197,7 +206,9 @@ export class ShoppingComponent implements OnInit {
     this.entityShopping.estadoCompra = 1;
 
     this.shoppingService.create(this.entityShopping).subscribe(response => {
-      this.router.navigate([`sales/shopping/${response.no_orden_compra}`]).then();
+      this.router.navigate([`sales/shopping/${response.no_orden_compra}`], {
+        queryParams: {new: true}
+      }).then();
     });
   }
 

@@ -66,7 +66,6 @@ export class SalesComponent implements OnInit {
     this.dateAdapter.setLocale('es');
     this.route.params.subscribe((params: any) => {
       if (params) {
-        console.log(params)
         if (params.sale) {
           this.entitySale.idVenta = params.sale;
         }
@@ -83,6 +82,13 @@ export class SalesComponent implements OnInit {
       this.queryClients();
       this.queryProducts();
       this.findSale();
+    });
+    this.route.queryParams.subscribe(params => {
+      if (params) {
+        if (params.new) {
+          this.openAdd();
+        }
+      }
     });
 
     this.filteredOptions = this.form.get('nit').valueChanges
@@ -108,8 +114,10 @@ export class SalesComponent implements OnInit {
     this.entitySale.estadoVenta = 2;
     this.entitySale.idVenta = +this.entitySale.idVenta;
     this.salesService.update(this.entitySale).subscribe(response => {
-      console.log(response);
+      this.notifications.success('Correcto', 'La venta se finalizó correctamente.');
       this.findSale();
+    }, error => {
+      this.notifications.error('Error', error);
     });
   }
 
@@ -199,7 +207,9 @@ export class SalesComponent implements OnInit {
     this.entitySale.serie = '12';
     console.log(this.entitySale)
     this.salesService.create(this.entitySale).subscribe(response => {
-      this.router.navigate([`sales/sale/${response.idVenta}`]).then();
+      this.router.navigate([`sales/sale/${response.idVenta}`], {
+        queryParams: {new: true}
+      }).then();
     });
   }
 
@@ -209,7 +219,6 @@ export class SalesComponent implements OnInit {
         const nitValue = this.form.get('nit').value;
         const findNit = this.listClients.find(item => item.nit === nitValue);
 
-        console.log(findNit)
         if (findNit === undefined) {
           this.entityClient.nombres = this.form.get('name').value;
           this.entityClient.apellidos = null;
@@ -219,7 +228,6 @@ export class SalesComponent implements OnInit {
           this.entityClient.correo = null;
 
           this.clientService.create(this.entityClient).subscribe(response => {
-            console.log(response);
             if (response) {
               this.entitySale.idCliente = response.idcliente;
               this.createSale();

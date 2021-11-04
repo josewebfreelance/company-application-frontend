@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {SecurityService} from '../services/security.service';
 import {Router} from '@angular/router';
 import {ValidateSessionService} from '../services/validate-session.service';
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      user: new FormControl(''),
-      pass: new FormControl('')
+      user: new FormControl('', [Validators.required]),
+      pass: new FormControl('', [Validators.required])
     });
 
     this.validateSession.status.subscribe(response => {
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
             this.validateSession.statusSubscribe.next(this.securityService.validateSession());
             // this.securityService.validateRedirection();
           } else {
-            this.validateResponse = false;
+            this.validateResponse = true;
             response.isLogin = false;
             this.notifications.error('Error', 'Credenciales invalidas, intente de nuevo.');
           }

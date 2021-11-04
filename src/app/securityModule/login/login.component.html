@@ -16,7 +16,7 @@
         <input matInput type="password" formControlName="pass" required maxlength="50">
       </mat-form-field>
 
-      <button class="col-12" mat-flat-button color="primary">Continuar</button>
+      <button class="col-12" mat-flat-button color="primary" [disabled]="form.invalid">Continuar</button>
     </div>
   </form>
 </div>
