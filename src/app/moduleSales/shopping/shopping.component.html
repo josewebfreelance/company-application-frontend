@@ -86,7 +86,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>  </th>
             <td mat-cell *matCellDef="let element">
-              <button class="state danger-bg" type="button" (click)="deleteDetail(element)" mat-mini-fab color="primary" matTooltip="Eliminar detalle">
+              <button [disabled]="entityShopping.estadoCompra === 2 || entityShopping.estadoCompra === 3" class="state danger-bg" type="button" (click)="deleteDetail(element)" mat-mini-fab color="primary" matTooltip="Eliminar detalle">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>

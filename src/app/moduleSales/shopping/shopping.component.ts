@@ -86,14 +86,7 @@ export class ShoppingComponent implements OnInit {
       this.findSale();
     });
 
-    this.route.queryParams.subscribe(params => {
-      if (params) {
-        if (params.new) {
-          this.openAdd();
-        }
-      }
-    });
-
+    console.log(this.form.get('provider'))
     this.filteredOptions = this.form.get('provider').valueChanges
       .pipe(
         startWith(''),
@@ -206,9 +199,7 @@ export class ShoppingComponent implements OnInit {
     this.entityShopping.estadoCompra = 1;
 
     this.shoppingService.create(this.entityShopping).subscribe(response => {
-      this.router.navigate([`sales/shopping/${response.no_orden_compra}`], {
-        queryParams: {new: true}
-      }).then();
+      this.router.navigate([`sales/shopping/${response.no_orden_compra}`]).then();
     });
   }
 

@@ -66,6 +66,7 @@ export class SalesComponent implements OnInit {
     this.dateAdapter.setLocale('es');
     this.route.params.subscribe((params: any) => {
       if (params) {
+        console.log(params)
         if (params.sale) {
           this.entitySale.idVenta = params.sale;
         }
@@ -82,13 +83,6 @@ export class SalesComponent implements OnInit {
       this.queryClients();
       this.queryProducts();
       this.findSale();
-    });
-    this.route.queryParams.subscribe(params => {
-      if (params) {
-        if (params.new) {
-          this.openAdd();
-        }
-      }
     });
 
     this.filteredOptions = this.form.get('nit').valueChanges
@@ -207,9 +201,7 @@ export class SalesComponent implements OnInit {
     this.entitySale.serie = '12';
     console.log(this.entitySale)
     this.salesService.create(this.entitySale).subscribe(response => {
-      this.router.navigate([`sales/sale/${response.idVenta}`], {
-        queryParams: {new: true}
-      }).then();
+      this.router.navigate([`sales/sale/${response.idVenta}`]).then();
     });
   }
 

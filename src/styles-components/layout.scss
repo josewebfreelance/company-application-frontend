@@ -3,6 +3,10 @@
 .container-fluid {
   background-color: $primary-color;
 
+  .table-content {
+    overflow-y: auto;
+  }
+
   .content {
     box-shadow: -5px 0 20px -18px rgba(0, 0, 0, .6);
     background-color: map-get($background-colors, primary);

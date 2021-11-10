@@ -49,7 +49,7 @@
       <button type="button" mat-flat-button color="primary" class="ms-3 state success-bg"
               [disabled]="entitySale.estadoVenta === 2 || entitySale.estadoVenta === 3"
               (click)="endSale()">
-        Finalizar factura <mat-icon>arrow_forward</mat-icon>
+        Finalizar venta <mat-icon>arrow_forward</mat-icon>
       </button>
 
       <div class="mat-elevation-z1 table-content mt-3">
@@ -83,7 +83,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>  </th>
             <td mat-cell *matCellDef="let element">
-              <button class="state danger-bg" type="button" (click)="deleteDetail(element)" mat-mini-fab color="primary" matTooltip="Eliminar detalle">
+              <button [disabled]="entitySale.estadoVenta === 2 || entitySale.estadoVenta === 3" class="state danger-bg" type="button" (click)="deleteDetail(element)" mat-mini-fab color="primary" matTooltip="Eliminar detalle">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
